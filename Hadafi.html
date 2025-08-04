@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بومودورو بلس - تصميم متجاوب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    /* للمتصفحات المبنية على WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 12px;               /* عرض شريط التمرير العمودي */
+  height: 12px;              /* ارتفاع شريط التمرير الأفقي */
+}
+
+::-webkit-scrollbar-track {
+  background: #fff0f0;       /* لون المسار (الخلفية) */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b91c1c; /* اللون الأحمر القوي */
+  border-radius: 8px;
+  border: 3px solid #fff0f0; /* إضاءة حول المقبض */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #7f1212; /* لون أغمق عند المرور بالفأرة */
+}
+
+/* للـ Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #b91c1c #fff0f0;
+}
+
+    body {
+      margin: 0; padding: 15px 12px;
+      font-family: 'Markazi Text', serif;
+      background: #fff;
+      color: #b91c1c;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container {
+      max-width: 740px;
+      width: 100%;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(185, 28, 28, 0.3);
+      padding: 30px 25px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      border: 2.5px solid #b91c1c;
+    }
+    header {
+      font-size: 3.6rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 3px;
+      color: #b91c1c;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+    }
+    header svg {
+      width: 52px;
+      height: 52px;
+      fill: #b91c1c;
+      filter: drop-shadow(0 0 3px #b91c1caa);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      user-select: none;
+      flex-wrap: wrap;
+    }
+    nav button {
+      background: transparent;
+      border: 3px solid #b91c1c;
+      color: #b91c1c;
+      padding: 14px 32px;
+      font-weight: 600;
+      font-size: 1.3rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Markazi Text', serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 110px;
+      justify-content: center;
+      user-select: none;
+    }
+    nav button:hover:not(.active) {
+      background: #b91c1c;
+      color: #fff;
+      box-shadow: 0 0 18px #b91c1c88;
+      transform: translateY(-2px);
+    }
+    nav button.active {
+      background: #b91c1c;
+      color: #fff;
+      box-shadow: 0 0 24px #b91c1ccc;
+      cursor: default;
+      transform: translateY(-2px);
+    }
+    main {
+      position: relative;
+      min-height: 460px;
+    }
+    section.tab-content {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      top: 0; right: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      font-weight: 600;
+      color: #800000;
+      user-select: none;
+    }
+    section.tab-content.active {
+      opacity: 1;
+      position: relative;
+      pointer-events: auto;
+    }
+
+    /* إضافة صورة البومودورو */
+    #pomodoro #pomodoro-img {
+      display: block;
+      margin: 0 auto 18px;
+      max-width: 120px;
+      width: 40vw;
+      height: auto;
+      user-select: none;
+      filter: drop-shadow(0 2px 5px #b91c1c88);
+      border-radius: 18px;
+    }
+
+    /* مؤقت بومودورو */
+    #pomodoro #timer {
+      font-size: 5.4rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 6px;
+      margin-bottom: 20px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #b91c1c;
+      user-select: none;
+    }
+    #pomodoro .controls {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    #pomodoro .controls button {
+      background: #b91c1c;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 28px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 18px #b91c1caa;
+      transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      font-family: 'Markazi Text', serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 90px;
+      justify-content: center;
+    }
+    #pomodoro .controls button:hover:not(:disabled) {
+      background: #7f1212;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px #7f121288;
+    }
+    #pomodoro .controls button:disabled {
+      background: #d8a2a2;
+      cursor: default;
+      box-shadow: none;
+      color: #7f3a3a;
+    }
+    #pomodoro #mode-cycle {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #b22a2a;
+      user-select: none;
+      font-family: 'Markazi Text', serif;
+    }
+    #pomodoro #quote {
+      font-style: italic;
+      font-size: 1.15rem;
+      text-align: center;
+      color: #b22a2a;
+      min-height: 54px;
+      user-select: none;
+      font-family: 'Markazi Text', serif;
+    }
+
+    /* قائمة المهام To-Do */
+    #todo {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      font-family: 'Markazi Text', serif;
+      user-select: none;
+    }
+    #todo input[type="text"] {
+      width: 100%;
+      padding: 18px 26px;
+      border-radius: 50px;
+      border: 2.5px solid #b91c1c;
+      font-size: 1.4rem;
+      outline: none;
+      background: #fff;
+      color: #b91c1c;
+      font-weight: 600;
+      user-select: text;
+      transition: border-color 0.3s ease;
+    }
+    #todo input[type="text"]:focus {
+      border-color: #7f1212;
+      box-shadow: 0 0 18px #b91c1c99;
+    }
+    #todo button.add-btn {
+      background: #b91c1c;
+      color: #fff;
+      border: none;
+      padding: 16px 44px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 7px 22px #b91c1caa;
+      transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      font-family: 'Markazi Text', serif;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 130px;
+      justify-content: center;
+    }
+    #todo button.add-btn:hover {
+      background: #7f1212;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px #7f121288;
+    }
+    #todo ul {
+      list-style: none;
+      padding: 0;
+      max-height: 350px;
+      overflow-y: auto;
+      user-select: none;
+      font-weight: 700;
+      border-radius: 20px;
+      border: 2px solid #b91c1c;
+      background: #fff;
+      color: #b91c1c;
+      box-shadow: inset 0 0 20px #f4c6c6aa;
+    }
+    #todo ul li {
+      padding: 16px 24px;
+      margin-bottom: 14px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #ffeaea;
+      color: #b91c1c;
+      box-shadow: 0 2px 8px #f4c6c6bb;
+      transition: background 0.3s ease;
+      font-family: 'Markazi Text', serif;
+    }
+    #todo ul li.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+      background: #f9dede;
+    }
+    #todo ul li input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      accent-color: #b91c1c;
+      flex-shrink: 0;
+    }
+    #todo ul li label {
+      flex-grow: 1;
+      cursor: pointer;
+      user-select: text;
+    }
+    #todo ul li button.delete-btn {
+      background: #a81a1a;
+      border: none;
+      border-radius: 36px;
+      padding: 8px 20px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 5px 16px #a81a1aaa;
+      transition: background 0.3s ease;
+      flex-shrink: 0;
+    }
+    #todo ul li button.delete-btn:hover {
+      background: #6f0e0e;
+    }
+    #todo ul::-webkit-scrollbar {
+      width: 12px;
+    }
+    #todo ul::-webkit-scrollbar-thumb {
+      background-color: #b91c1c;
+      border-radius: 8px;
+    }
+
+    /* تخطيط الغد */
+    #planning {
+      font-family: 'Markazi Text', serif;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      color: #b91c1c;
+      user-select: none;
+    }
+    #planning label {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    #planning input[type="text"] {
+      padding: 14px 20px;
+      border-radius: 50px;
+      border: 2.5px solid #b91c1c;
+      font-size: 1.4rem;
+      outline: none;
+      color: #b91c1c;
+      font-weight: 600;
+      background: #fff;
+      user-select: text;
+      transition: border-color 0.3s ease;
+    }
+    #planning input[type="text"]:focus {
+      border-color: #7f1212;
+      box-shadow: 0 0 18px #b91c1c99;
+    }
+    #planning button.save-btn {
+      background: #b91c1c;
+      color: #fff;
+      border: none;
+      padding: 14px 42px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 7px 22px #b91c1caa;
+      transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      font-family: 'Markazi Text', serif;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 130px;
+      justify-content: center;
+    }
+    #planning button.save-btn:hover {
+      background: #7f1212;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px #7f121288;
+    }
+    #planning #save-msg {
+      color: #b91c1c;
+      font-weight: 700;
+      font-size: 1.3rem;
+      min-height: 28px;
+      user-select: none;
+      margin-top: -8px;
+      margin-bottom: 8px;
+      font-family: 'Markazi Text', serif;
+    }
+    #planning ul#plan-list {
+      list-style: none;
+      padding: 0;
+      max-height: 280px;
+      overflow-y: auto;
+      border-radius: 20px;
+      border: 2px solid #b91c1c;
+      background: #fff;
+      box-shadow: inset 0 0 20px #f4c6c6aa;
+      color: #b91c1c;
+      font-weight: 700;
+      font-family: 'Markazi Text', serif;
+      user-select: none;
+    }
+    #planning ul#plan-list li {
+      padding: 14px 22px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+      background: #ffeaea;
+      box-shadow: 0 2px 7px #f4c6c6bb;
+      user-select: text;
+    }
+    #planning ul#plan-list::-webkit-scrollbar {
+      width: 12px;
+    }
+    #planning ul#plan-list::-webkit-scrollbar-thumb {
+      background-color: #b91c1c;
+      border-radius: 8px;
+    }
+
+    /* الأدوات */
+    #toolbox ul {
+      list-style: none;
+      padding: 0;
+      font-weight: 600;
+      color: #b91c1c;
+      font-family: 'Markazi Text', serif;
+      user-select: none;
+    }
+    #toolbox ul li {
+      margin-bottom: 18px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      line-height: 1.4;
+    }
+    #toolbox ul li i {
+      color: #b91c1c;
+      min-width: 22px;
+      font-size: 1.4rem;
+    }
+    #toolbox ul li a {
+      text-decoration: none;
+      color: #b91c1c;
+      font-weight: 700;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    #toolbox ul li a:hover {
+      border-color: #b91c1c;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #b91c1c;
+      margin-top: 14px;
+      user-select: none;
+      font-family: 'Markazi Text', serif;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px 30px;
+        border-radius: 20px;
+      }
+      header {
+        font-size: 3.1rem;
+        gap: 12px;
+      }
+      nav button {
+        padding: 12px 22px;
+        font-size: 1.15rem;
+        min-width: 95px;
+      }
+      #pomodoro #timer {
+        font-size: 4.8rem;
+        letter-spacing: 5px;
+      }
+      #pomodoro #pomodoro-img {
+        max-width: 100px;
+        width: 38vw;
+        margin-bottom: 14px;
+      }
+      #pomodoro .controls button {
+        padding: 12px 26px;
+        font-size: 1.15rem;
+        min-width: 85px;
+      }
+      #todo input[type="text"], #planning input[type="text"] {
+        padding: 14px 18px;
+        font-size: 1.3rem;
+      }
+      #todo button.add-btn, #planning button.save-btn {
+        padding: 14px 28px;
+        font-size: 1.25rem;
+        min-width: 115px;
+      }
+    }
+    @media (max-width: 420px) {
+      body {
+        padding: 12px 10px;
+      }
+      .container {
+        padding: 18px 12px 28px;
+        border-radius: 18px;
+      }
+      header {
+        font-size: 2.8rem;
+      }
+      nav {
+        gap: 12px;
+      }
+      nav button {
+        padding: 10px 18px;
+        font-size: 1.05rem;
+        min-width: 80px;
+      }
+      #pomodoro #timer {
+        font-size: 4rem;
+        letter-spacing: 3.5px;
+      }
+      #pomodoro #pomodoro-img {
+        max-width: 90px;
+        width: 40vw;
+        margin-bottom: 12px;
+      }
+      #pomodoro .controls button {
+        padding: 10px 20px;
+        font-size: 1.05rem;
+        min-width: 70px;
+      }
+      #todo input[type="text"], #planning input[type="text"] {
+        padding: 12px 16px;
+        font-size: 1.1rem;
+      }
+      #todo button.add-btn, #planning button.save-btn {
+        padding: 12px 22px;
+        font-size: 1.15rem;
+        min-width: 100px;
+      }
+    }
+  #plan-list li {
+    background: #f0f0f0;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+  }
+  .task-text {
+    flex-grow: 1;
+    margin-right: 10px;
+    word-break: break-word;
+  }
+  .btn-check, .btn-error {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 18px;
+    padding: 5px;
+    user-select: none;
+  }
+  .btn-check {
+    color: green;
+  }
+  .btn-error {
+    color: red;
+  }
+  /* ظل أخضر */
+  .completed {
+    box-shadow: 0 0 10px 3px rgba(0, 128, 0, 0.7);
+  }
+  /* ظل أحمر */
+  .error {
+    box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.7);
+  }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="أداة الإنتاجية المتكاملة">
+  
+<header style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; text-align: center; flex-direction: column;">
+
+  <div style="display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; max-width: 300px;">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="رمز البندورة" width="40" height="40" fill="#b91c1c" stroke="#b91c1c" stroke-width="4">
+      <circle cx="32" cy="32" r="30" fill="#fff"/>
+      <path d="M32 12a20 20 0 1020 20 20.023 20.023 0 00-20-20zm0 35a15 15 0 1115-15 15.017 15.017 0 01-15 15z"/>
+      <circle cx="32" cy="32" r="7"/>
+    </svg>
+
+    <span style="font-family: 'Markazi Text', serif; font-size: 1.8rem; color: #b91c1c;">
+      تطبيق هدفي
+    </span>
+
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="رمز البندورة" width="40" height="40" fill="#b91c1c" stroke="#b91c1c" stroke-width="4">
+      <circle cx="32" cy="32" r="30" fill="#fff"/>
+      <path d="M32 12a20 20 0 1020 20 20.023 20.023 0 00-20-20zm0 35a15 15 0 1115-15 15.017 15.017 0 01-15 15z"/>
+      <circle cx="32" cy="32" r="7"/>
+    </svg>
+  </div>
+
+  <p style="font-family: 'Markazi Text', serif; font-size: 16px; color: #444; max-width: 600px; margin-top: 6px;">
+  صُمم <strong style="color:#b91c1c;">تطبيق هدفي</strong> ليعتمد على تقنية <strong style="color:#b91c1c;">بومودورو</strong>، وهي طريقة ذكية لتنظيم الوقت من خلال جلسات تركيز منتجة تتخللها فترات راحة قصيرة، وذلك لدعم الشباب العربي في رحلتهم نحو الاجتهاد والتميز.
+
+  </p>
+
+</header>
+
+<nav role="tablist" aria-label="التبويبات">
+  <button role="tab" aria-selected="true" aria-controls="pomodoro" id="tab-pomodoro" data-tab="pomodoro" class="tab-btn active" tabindex="0">
+    مؤقت <i class="fas fa-stopwatch" aria-hidden="true"></i>
+  </button>
+  <button role="tab" aria-selected="false" aria-controls="todo" id="tab-todo" data-tab="todo" class="tab-btn" tabindex="-1">
+    مهام <i class="fas fa-list-check" aria-hidden="true"></i>
+  </button>
+  <button role="tab" aria-selected="false" aria-controls="planning" id="tab-planning" data-tab="planning" class="tab-btn" tabindex="-1">
+    تخطيط الغد <i class="fas fa-calendar-day" aria-hidden="true"></i>
+  </button>
+  <button role="tab" aria-selected="false" aria-controls="toolbox" id="tab-toolbox" data-tab="toolbox" class="tab-btn" tabindex="-1">
+    نصائح <i class="fas fa-lightbulb" aria-hidden="true"></i>
+  </button>
+</nav>
+
+
+    </nav>
+    <main>
+      <!-- مؤقت Pomodoro -->
+      <section id="pomodoro" role="tabpanel" aria-labelledby="tab-pomodoro" tabindex="0" class="tab-content active" aria-hidden="false">
+        <img src="https://res.cloudinary.com/dcbxuax2c/image/upload/v1753230255/Untitled_design_54_l2xcfj.png" alt="صورة بومودورو" id="pomodoro-img" />
+        <div id="timer" aria-live="polite" aria-atomic="true">25:00</div>
+        <div class="controls" role="group" aria-label="عناصر التحكم بالمؤقت">
+          <button id="start-btn" aria-label="ابدأ المؤقت"><i class="fas fa-play" aria-hidden="true"></i> ابدأ</button>
+          <button id="pause-btn" aria-label="أوقف المؤقت" disabled><i class="fas fa-pause" aria-hidden="true"></i> توقف</button>
+          <button id="reset-btn" aria-label="إعادة ضبط"><i class="fas fa-undo" aria-hidden="true"></i> إعادة ضبط</button>
+        </div>
+        <div id="mode-cycle" aria-live="polite" aria-atomic="true" style="margin-bottom: 18px;">التركيز | دورة 1 من 4</div>
+        <div id="quote" aria-live="polite" aria-atomic="true">ابق مركزًا ولا تستسلم!</div>
+        <audio id="ding" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" preload="auto"></audio>
+      </section>
+
+      <!-- قائمة المهام -->
+      <section id="todo" role="tabpanel" aria-labelledby="tab-todo" tabindex="0" class="tab-content" aria-hidden="true">
+        <input type="text" id="todo-input" aria-label="أدخل مهمة جديدة" placeholder="اكتب مهمة جديدة واضغط + أو Enter" autocomplete="off" />
+        <button class="add-btn" id="add-todo-btn" aria-label="أضف مهمة"><i class="fas fa-plus" aria-hidden="true"></i> أضف مهمة</button>
+        <ul id="todo-list" aria-live="polite" aria-atomic="true" role="list"></ul>
+      </section>
+
+      <!-- تخطيط الغد -->
+<section id="planning" role="tabpanel" aria-labelledby="tab-planning" tabindex="0" class="tab-content" aria-hidden="true" style="direction: rtl;">
+  <label for="plan-input">أضف مهمة أو هدف ليوم الغد:</label>
+  <input type="text" id="plan-input" placeholder="مثلاً: مراجعة مشروع، قراءة 20 صفحة" aria-describedby="save-msg" autocomplete="off" />
+  <button class="save-btn" id="save-plan-btn" aria-label="احفظ تخطيط الغد">
+    <i class="fas fa-save" aria-hidden="true"></i> احفظ
+  </button>
+  <div id="save-msg" role="alert" aria-live="assertive" style="margin-top: 10px; color: green; font-weight: bold;"></div>
+  <ul id="plan-list" aria-live="polite" aria-atomic="true" role="list" style="margin-top: 20px; padding-left: 0; list-style: none;"></ul>
+</section>
+
+      <!-- الأدوات -->
+<!-- قسم النصائح -->
+<section id="toolbox" role="tabpanel" aria-labelledby="tab-toolbox" tabindex="0" class="tab-content" aria-hidden="true">
+  <div style="padding: 1rem;">
+    <h2 style="font-family: 'Markazi Text', serif; font-size: 2rem; color: #b91c1c; display: flex; align-items: center; gap: 0.5rem;">
+      💡 النصائح
+    </h2>
+    <div style="font-size: 1.4rem; line-height: 1.8; color: #b91c1c; font-family: 'Markazi Text', serif;">
+      <p>🍅 حدد أهدافك بوضوح: قبل بدء كل جلسة، كن واضحًا بشأن المهمة التي تريد إنجازها.</p>
+      <p>🍅 التزم بفترات العمل: استغل كل دقيقة في فترة البومودورو بتركيز كامل دون تشتيت.</p>
+      <p>🍅 خذ استراحات منتظمة: استراحة قصيرة بعد كل جلسة تساعد على تجديد نشاطك وتركيزك.</p>
+      <p>🍅 قلل مصادر الإلهاء: أغلق الإشعارات وأبعد الأجهزة التي قد تشتتك أثناء العمل.</p>
+      <p>🍅 راجع تقدمك يوميًا: قيّم ما أنجزته واستخدمه لتحسين خطتك في اليوم التالي.</p>
+      <p>🍅 كن مرنًا: إذا شعرت بالإرهاق، خذ استراحة أطول أو عدل جدولك بما يناسبك.</p>
+      <p>🍅 شارك الخير: استخدم الوقت الفارغ لتفكر في طرق تساعد بها الآخرين، فالتغيير يبدأ منك.</p>
+      <p>🍅 احترم وقتك ووقتهم: إدارة الوقت بحكمة تضمن تحقيق أهدافك الشخصية والمجتمعية.</p>
+      <p>🍅 تعلم من الأخطاء: التصليح الذاتي هو مفتاح النمو، لا تخف من التعديل والتحسين المستمر.</p>
+      <p>🍅 احتفل بالإنجازات: مهما كانت صغيرة، كل خطوة للأمام تستحق التقدير.</p>
+    </div>
+  </div>
+</section>
+
+    </main>
+<footer style="text-align: center; padding: 1rem; font-family: 'Markazi Text', serif; color: #b91c1c;">
+
+  &copy; 2025 - تطبيق هدفي | صُنِعَ بِأَيَادٍ عَرَبِيَّةٍ، مَلْؤُهَا الحُبُّ وَالإِصْرَارُ
+
+  <br />
+
+  <img 
+    src="https://res.cloudinary.com/dcbxuax2c/image/upload/v1751767267/Untitled_design_46_l0l0mt.png" 
+    alt="شعار بومودورو بلس" 
+    style="margin-top: 8px; width: 50px; height: auto; display: inline-block;" 
+  />
+
+</footer>
+
+  </div>
+
+<script>
+  // تبويبات التنقل
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.tabIndex = -1;
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+
+      const target = tab.dataset.tab;
+      contents.forEach(c => {
+        c.classList.toggle('active', c.id === target);
+        c.setAttribute('aria-hidden', c.id !== target ? 'true' : 'false');
+        c.tabIndex = c.id !== target ? -1 : 0;
+      });
+    });
+  });
+
+  // مؤقت بومودورو
+  const timerDisplay = document.getElementById('timer');
+  const startBtn = document.getElementById('start-btn');
+  const pauseBtn = document.getElementById('pause-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const modeCycle = document.getElementById('mode-cycle');
+  const quote = document.getElementById('quote');
+  const ding = document.getElementById('ding');
+
+  const quotes = [
+    "ابق مركزًا ولا تستسلم!",
+    "كل دقيقة تركيز تقربك لهدفك.",
+    "ابدأ الآن ولا تنتظر!",
+    "التركيز يصنع الفارق الكبير.",
+    "صبر وثبات هو سر النجاح."
+  ];
+
+  const MODES = {
+    FOCUS: 'التركيز',
+    SHORT_BREAK: 'استراحة قصيرة',
+    LONG_BREAK: 'استراحة طويلة'
+  };
+
+  let mode = MODES.FOCUS;
+  let cycleCount = 1;
+  let timer = null;
+  let secondsLeft = 25 * 60;
+
+  function updateTimerDisplay() {
+    const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+    const secs = String(secondsLeft % 60).padStart(2, '0');
+    timerDisplay.textContent = `${mins}:${secs}`;
+  }
+
+  function nextMode() {
+    if (mode === MODES.FOCUS) {
+      mode = cycleCount < 4 ? MODES.SHORT_BREAK : MODES.LONG_BREAK;
+    } else {
+      cycleCount = mode === MODES.LONG_BREAK ? 1 : cycleCount + 1;
+      mode = MODES.FOCUS;
+    }
+
+    secondsLeft = mode === MODES.FOCUS ? 25 * 60 : mode === MODES.SHORT_BREAK ? 5 * 60 : 15 * 60;
+    modeCycle.textContent = `${mode} | دورة ${mode === MODES.FOCUS ? cycleCount : cycleCount - 1} من 4`;
+    quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+  }
+
+  function startTimer() {
+    if (timer) return;
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    resetBtn.disabled = true;
+
+    timer = setInterval(() => {
+      secondsLeft--;
+      updateTimerDisplay();
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        timer = null;
+        ding.play();
+        nextMode();
+        updateTimerDisplay();
+        startTimer();
+        resetBtn.disabled = false;
+      }
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = false;
+  }
+
+  function resetTimer() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+    secondsLeft = mode === MODES.FOCUS ? 25 * 60 : mode === MODES.SHORT_BREAK ? 5 * 60 : 15 * 60;
+    updateTimerDisplay();
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = true;
+  }
+
+  startBtn.addEventListener('click', startTimer);
+  pauseBtn.addEventListener('click', pauseTimer);
+  resetBtn.addEventListener('click', resetTimer);
+  updateTimerDisplay();
+  modeCycle.textContent = `${mode} | دورة ${cycleCount} من 4`;
+  quote.textContent = quotes[0];
+
+  // المهام اليومية
+  const todoInput = document.getElementById('todo-input');
+  const addTodoBtn = document.getElementById('add-todo-btn');
+  const todoList = document.getElementById('todo-list');
+
+  function saveTodos() {
+    const todos = [];
+    todoList.querySelectorAll('li').forEach(li => {
+      todos.push({
+        text: li.querySelector('label').textContent,
+        time: li.querySelector('span.time').textContent,
+        done: li.classList.contains('completed')
+      });
+    });
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }
+
+  function loadTodos() {
+    const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+    todoList.innerHTML = '';
+    todos.forEach(({ text, time, done }) => {
+      addTodoItem(text, time, done);
+    });
+  }
+
+  function addTodoItem(text, time = null, done = false) {
+    const li = document.createElement('li');
+    if (done) li.classList.add('completed');
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = done;
+    checkbox.addEventListener('change', () => {
+      li.classList.toggle('completed');
+      saveTodos();
+    });
+
+    const label = document.createElement('label');
+    label.textContent = text;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'time';
+    timeSpan.style.marginInlineStart = '10px';
+    const now = new Date();
+    timeSpan.textContent = time || `${now.toLocaleDateString()} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'حذف';
+    delBtn.className = 'delete-btn';
+    delBtn.addEventListener('click', () => {
+      li.remove();
+      saveTodos();
+    });
+
+    li.append(checkbox, label, timeSpan, delBtn);
+    todoList.appendChild(li);
+    saveTodos();
+  }
+
+  addTodoBtn.addEventListener('click', () => {
+    const text = todoInput.value.trim();
+    if (text) {
+      addTodoItem(text);
+      todoInput.value = '';
+      todoInput.focus();
+    }
+  });
+  todoInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') addTodoBtn.click();
+  });
+  loadTodos();
+
+  // تخطيط الغد
+  const saveBtn = document.getElementById('save-plan-btn');
+  const planInput = document.getElementById('plan-input');
+  const saveMsg = document.getElementById('save-msg');
+  const planList = document.getElementById('plan-list');
+
+  // تحميل المهام من التخزين المحلي
+  let tasks = JSON.parse(localStorage.getItem('planningTasks')) || [];
+
+  // حفظ إلى التخزين المحلي
+  function saveTasks() {
+    localStorage.setItem('planningTasks', JSON.stringify(tasks));
+  }
+
+  // عرض القائمة
+  function renderTasks() {
+    planList.innerHTML = '';
+    tasks.forEach((task, index) => {
+      const li = document.createElement('li');
+      li.style.cssText = `
+        background: #f7f7f7;
+        margin-bottom: 12px;
+        padding: 12px 15px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: ${
+          task.status === 'done'
+            ? '0 0 10px rgba(0, 128, 0, 0.5)'
+            : task.status === 'fail'
+            ? '0 0 10px rgba(255, 0, 0, 0.4)'
+            : 'none'
+        };
+        transition: all 0.3s ease;
+      `;
+
+      // السطر الأول للمهمة والأزرار
+      const mainRow = document.createElement('div');
+      mainRow.style.display = 'flex';
+      mainRow.style.justifyContent = 'space-between';
+      mainRow.style.alignItems = 'center';
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'task-text';
+      textSpan.textContent = task.text;
+      textSpan.style.fontWeight = 'bold';
+
+      // الأزرار (إنجاز - فشل - حذف)
+      const btns = document.createElement('div');
+
+      const btnCheck = document.createElement('button');
+      btnCheck.textContent = '✔️';
+      btnCheck.style.cssText = `
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: green;
+        margin-left: 8px;
+      `;
+      btnCheck.onclick = () => {
+        const date = new Date().toLocaleDateString('ar-EG', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        task.status = 'done';
+        task.result = `تم إنجاز المهمة بتاريخ ${date}`;
+        saveTasks();
+        renderTasks();
+      };
+
+      const btnFail = document.createElement('button');
+      btnFail.textContent = '❌';
+      btnFail.style.cssText = `
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: red;
+        margin-left: 8px;
+      `;
+      btnFail.onclick = () => {
+        task.status = 'fail';
+        task.result = 'لم يتم إنجاز المهمة';
+        saveTasks();
+        renderTasks();
+      };
+
+      const btnDelete = document.createElement('button');
+      btnDelete.textContent = '🗑️';
+      btnDelete.style.cssText = `
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #555;
+        margin-left: 8px;
+      `;
+      btnDelete.onclick = () => {
+        tasks.splice(index, 1); // حذف من المصفوفة
+        saveTasks();
+        renderTasks();
+      };
+
+      // إضافة الأزرار
+      btns.appendChild(btnCheck);
+      btns.appendChild(btnFail);
+      btns.appendChild(btnDelete);
+
+      mainRow.appendChild(textSpan);
+      mainRow.appendChild(btns);
+      li.appendChild(mainRow);
+
+      // النتيجة (تم الإنجاز أو لم يتم...)
+      if (task.result) {
+        const result = document.createElement('div');
+        result.textContent = task.result;
+        result.style.cssText = `
+          margin-top: 8px;
+          font-size: 0.9rem;
+          color: ${task.status === 'done' ? 'green' : 'red'};
+        `;
+        li.appendChild(result);
+      }
+
+      planList.appendChild(li);
+    });
+  }
+
+  // حفظ مهمة جديدة
+  saveBtn.addEventListener('click', () => {
+    const taskText = planInput.value.trim();
+    if (!taskText) {
+      saveMsg.textContent = 'يرجى إدخال مهمة أو هدف.';
+      saveMsg.style.color = 'red';
+      return;
+    }
+
+    tasks.push({
+      text: taskText,
+      status: '',
+      result: ''
+    });
+
+    saveTasks();
+    renderTasks();
+
+    saveMsg.textContent = 'تم حفظ الهدف والتخطيط للغد';
+    saveMsg.style.color = 'green';
+    planInput.value = '';
+  });
+
+  renderTasks();
+</script>
+
+<!-- صفحة اللودينج -->
+<div id="loading-screen" 
+     style="
+       position: fixed;
+       top: 0; left: 0; right: 0; bottom: 0;
+       height: 100vh;
+       background: white;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       gap: 20px;
+       z-index: 9999;
+       text-align: center;
+       direction: ltr;
+     ">
+
+  
+  <!-- لوجو بومودورو مع حركة تكبير وتصغير -->
+<div style="display: flex; flex-direction: column; align-items: center; transform: translateY(-30px); gap: 10px;">
+  <img id="pomodoro-logo" src="https://res.cloudinary.com/dcbxuax2c/image/upload/v1753230255/Untitled_design_54_l2xcfj.png" 
+       alt="شعار بومودورو" 
+       style="width: 120px; height: auto; animation: pulse 3s ease-in-out infinite;" />
+  
+  <div id="loading-text" style="
+    font-family: 'Markazi Text', serif; 
+    font-size: 1.6rem; 
+    color: #000; 
+    font-weight: 600; 
+    white-space: nowrap;
+    animation: blinkText 1.5s ease-in-out infinite alternate;
+  ">
+    انتظر من فضلك
+  </div>
+</div>
+
+  
+  <!-- في الأسفل الشعار مع العبارة بتأثير لطيف -->
+  <div style="position: absolute; bottom: 20px; text-align: center; width: 100%; direction: rtl;">
+    <p id="arabic-text" style="
+      font-family: 'Markazi Text', serif; 
+      font-size: 1rem; 
+      color: #000; 
+      margin-bottom: 5px;
+      animation: gentleFade 3s ease-in-out infinite alternate;
+      ">
+      صُنِعَ بِأَيَادٍ عَرَبِيَّةٍ، مَلْؤُهَا الحُبُّ وَالإِصْرَارُ
+    </p>
+    <img src="https://res.cloudinary.com/dcbxuax2c/image/upload/v1751767267/Untitled_design_46_l0l0mt.png" 
+         alt="شعار" 
+         style="width: 50px; height: auto; margin: 0 auto; display: block;"/>
+  </div>
+</div>
+
+<style>
+  /* حركة تكبير وتصغير للشعار */
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* وميض النص "انتظر من فضلك" */
+  @keyframes blinkText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* وميض ناعم للنص السفلي */
+  @keyframes gentleFade {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+  }
+
+  /* اختفاء اللودينج بحركة فاني وتحرك للأعلى */
+  @keyframes fadeUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+  }
+</style>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const loadingScreen = document.getElementById('loading-screen');
+      loadingScreen.style.animation = 'fadeUp 0.6s ease forwards';
+      setTimeout(() => loadingScreen.style.display = 'none', 600);
+    }, 4000); // 4 ثواني
+  });
+</script>
+
+  </script>
+</body>
+
+</html>
